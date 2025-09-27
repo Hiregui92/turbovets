@@ -1,0 +1,19 @@
+<div class="p-6">
+  <h2 class="text-xl font-bold mb-4">Audits</h2>
+
+  <table class="w-full border">
+    <thead class="bg-gray-200 dark:bg-gray-700">
+      <tr>
+        <th class="p-2 text-left">Name</th>
+        <th class="p-2 text-left">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let audit of audits" class="border-b">
+        <td class="p-2">{{ audit.name }}</td>
+        <td class="p-2">{{ audit.description }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

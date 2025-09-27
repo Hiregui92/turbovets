@@ -1,0 +1,45 @@
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards, Req } from '@nestjs/common';
+// import type Request from 'express';
+import { Request as ExpressRequest } from 'express';
+import { RolesService } from './roles.service';
+// import { CreateTaskDto, UpdateTaskDto } from '../dtos/task.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { Permissions } from '../auth/permissions.decorator';
+import { PermissionsGuard } from '../auth/permissions.guard';
+
+@Controller('roles')
+//@UseGuards(JwtAuthGuard, PermissionsGuard)
+export class RolesController {
+  constructor(private roleService: RolesService) {}
+
+  @Post()
+  @Permissions('role.create')
+  async create(/*@Body() dto: CreateTaskDto, */@Req() req: ExpressRequest) {
+    const user = req.user;
+    return true;
+    // return this.organizationsService.create(dto, user);
+  }
+
+  @Get()
+  // @Permissions('role.read')
+  async findAll(@Req() req: ExpressRequest) {
+    const user = req.user;
+    // return true;
+    return this.roleService.findAll();
+  }
+/*
+  @Put(':id')
+  @Permissions('task.update')
+  async update(@Param('id') id: string, @Body() dto: UpdateTaskDto, @Req() req: ExpressRequest) {
+    const user = req.user;
+    return this.tasksService.update(id, dto, user);
+  }
+
+  @Delete(':id')
+  @Permissions('task.delete')
+  async remove(@Param('id') id: string, @Req() req: ExpressRequest) {
+    const user = req.user;
+    return this.tasksService.remove(id, req.user);
+  }*/
+}
+

@@ -1,0 +1,38 @@
+<div class="flex gap-6 overflow-x-auto pb-4">
+  <!-- Columna Todo -->
+  <div class="flex-1 min-w-[250px] bg-gray-100 rounded-xl p-4 shadow-md"
+       cdkDropList [cdkDropListData]="todo" 
+       (cdkDropListDropped)="drop($event, 'Todo')">
+    <h3 class="text-lg font-semibold mb-4 text-gray-800">Todo</h3>
+    <div *ngFor="let task of todo" cdkDrag 
+         class="mb-3 p-3 bg-white rounded-xl shadow-sm border 
+                hover:shadow-md cursor-grab active:cursor-grabbing transition">
+      {{ task.title }}
+    </div>
+  </div>
+
+  <!-- Columna In Progress -->
+  <div class="flex-1 min-w-[250px] bg-gray-100 rounded-xl p-4 shadow-md"
+       cdkDropList [cdkDropListData]="inProgress" 
+       (cdkDropListDropped)="drop($event, 'In Progress')">
+    <h3 class="text-lg font-semibold mb-4 text-gray-800">In Progress</h3>
+    <div *ngFor="let task of inProgress" cdkDrag 
+         class="mb-3 p-3 bg-white rounded-xl shadow-sm border 
+                hover:shadow-md cursor-grab active:cursor-grabbing transition">
+      {{ task.title }}
+    </div>
+  </div>
+
+  <!-- Columna Done -->
+  <div class="flex-1 min-w-[250px] bg-gray-100 rounded-xl p-4 shadow-md"
+       cdkDropList [cdkDropListData]="done" 
+       (cdkDropListDropped)="drop($event, 'Done')">
+    <h3 class="text-lg font-semibold mb-4 text-gray-800">Done</h3>
+    <div *ngFor="let task of done" cdkDrag 
+         class="mb-3 p-3 bg-white rounded-xl shadow-sm border 
+                hover:shadow-md cursor-grab active:cursor-grabbing transition">
+      {{ task.title }}
+    </div>
+  </div>
+</div>
+

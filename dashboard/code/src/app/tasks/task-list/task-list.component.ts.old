@@ -1,0 +1,28 @@
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../services/api.service';
+
+@Component({
+  selector: 'app-task-list',
+  templateUrl: './task-list.component.html',
+  styleUrls: ['./task-list.component.scss']
+})
+export class TaskListComponent implements OnInit {
+  tasks: any[] = [];
+
+  constructor(private api: ApiService) {}
+
+  ngOnInit() {
+    this.loadTasks();
+  }
+
+  loadTasks() {
+    this.api.getTasks().subscribe({
+      next: res => this.tasks = res,
+      error: err => console.error('Failed to load tasks', err)
+    });
+  }
+
+  deleteTask(id: string) {
+    this.api.deleteTask(id).subscribe(() => this.loadTasks());
+  }
+}

@@ -1,0 +1,63 @@
+[
+  {
+    "id": 1,
+    "title": "Design login page",
+    "description": "Create UI and UX for login screen",
+    "status": "To Do"
+  },
+  {
+    "id": 2,
+    "title": "Implement signup logic",
+    "description": "Connect signup form with backend API",
+    "status": "In Progress"
+  },
+  {
+    "id": 3,
+    "title": "Database schema",
+    "description": "Design PostgreSQL schema for tasks module",
+    "status": "To Do"
+  },
+  {
+    "id": 4,
+    "title": "Kanban view",
+    "description": "Add drag-and-drop support for tasks",
+    "status": "Review"
+  },
+  {
+    "id": 5,
+    "title": "Dark mode toggle",
+    "description": "Implement dark/light theme switch",
+    "status": "In Progress"
+  },
+  {
+    "id": 6,
+    "title": "Unit tests",
+    "description": "Write tests for signup component",
+    "status": "Done"
+  },
+  {
+    "id": 7,
+    "title": "Docker setup",
+    "description": "Add Dockerfile and docker-compose for dev",
+    "status": "To Do"
+  },
+  {
+    "id": 8,
+    "title": "CI/CD pipeline",
+    "description": "Setup GitHub Actions",
+    "status": "Review"
+  },
+  {
+    "id": 9,
+    "title": "Responsive styles",
+    "description": "Ensure mobile and tablet compatibility",
+    "status": "In Progress"
+  },
+  {
+    "id": 10,
+    "title": "Deploy preview",
+    "description": "Deploy staging environment for QA",
+    "status": "Done"
+  }
+]
+

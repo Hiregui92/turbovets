@@ -1,0 +1,24 @@
+<div class="p-6">
+  <h2 class="text-xl font-bold mb-4">Audits</h2>
+
+  <table class="w-full border">
+    <thead class="bg-gray-200 dark:bg-gray-700">
+      <tr>
+        <th class="p-2 text-left">Autor</th>
+        <th class="p-2 text-left">Email</th>
+        <th class="p-2 text-left">Action</th>
+        <th class="p-2 text-left">Metadata</th>
+        <th class="p-2 text-left">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let audit of audits" class="border-b">
+        <td class="p-2">{{ audit.actorId }}</td>
+        <td class="p-2">{{ audit.actorEmail }}</td>
+        <td class="p-2">{{ audit.action }}</td>
+        <td class="p-2"><pre>{{ audit.metadata | json }}</pre></td>
+        <td class="p-2">{{ audit.createdAt }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

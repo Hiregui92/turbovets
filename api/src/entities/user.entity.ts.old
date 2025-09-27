@@ -1,0 +1,31 @@
+
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Organization } from './organization.entity';
+import { Role } from './role.entity';
+import { Task } from './task.entity';
+
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ unique: true })
+  email: string;
+
+  @Column()
+  passwordHash: string;
+
+  @Column()
+  name: string;
+
+  @ManyToOne(() => Organization)
+  @JoinColumn()
+  organization: Organization;
+
+  @ManyToOne(() => Role)
+  role: Role;
+
+  @OneToMany(() => Task, t => t.owner)
+  tasks: Task[];
+}
+

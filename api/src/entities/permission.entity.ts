@@ -1,0 +1,11 @@
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+
+@Entity()
+export class Permission {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
+  @Column({ unique: true })
+  name!: string; // e.g., task.create, task.read, task.update, task.delete, audit.read
+}
+

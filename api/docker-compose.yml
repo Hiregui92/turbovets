@@ -1,0 +1,37 @@
+
+version: '3.9'
+
+services:
+  nest-api:
+    build: .
+    container_name: turbovets-api
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_NAME: taskdb
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:16
+    container_name: turbovets-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: taskdb
+    ports:
+      - "5436:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+        # - ./init:/docker-entrypoint-initdb.d
+        # - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      # - ./docker-entrypoint-init.sh:/docker-entrypoint-init.sh
+      # entrypoint: ["/docker-entrypoint-init.sh"]
+volumes:
+  db_data:
+

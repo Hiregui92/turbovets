@@ -1,0 +1,16 @@
+import { Module, Controller, Get } from '@nestjs/common';
+
+@Controller()
+export class AppController {
+  @Get()
+  getHello(): string {
+    return 'Hola Mundo desde NestJS!';
+  }
+}
+
+@Module({
+  imports: [],
+  controllers: [AppController],
+})
+export class AppModule {}
+

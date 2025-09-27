@@ -1,0 +1,14 @@
+/* TailwindCSS maneja la mayoría de estilos, solo ajustes extra si quieres */
+
+body {
+  @apply bg-gradient-to-r from-blue-400 to-purple-500;
+}
+
+input:focus {
+  @apply ring-2 ring-blue-400 outline-none;
+}
+
+button:focus {
+  @apply ring-2 ring-blue-400 outline-none;
+}
+

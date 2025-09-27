@@ -1,0 +1,18 @@
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+
+@Entity()
+export class Organization {
+  @PrimaryGeneratedColumn()
+  id!: number;
+
+  @Column()
+  name!: string;
+
+  // Parent org for 2-level hierarchy (nullable for top-level)
+  @ManyToOne(() => Organization, { nullable: true })
+  parent?: Organization;
+
+  @OneToMany(() => Organization, org => org.parent)
+  children?: Organization[];
+}
+
