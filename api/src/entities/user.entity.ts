@@ -27,5 +27,21 @@ export class User {
 
   @OneToMany(() => Task, t => t.owner)
   tasks!: Task[];
-}
+
+  get permissions(): string[] {
+    if (!this.role) return [];
+    return User.resolvePermissions(this.role);
+  }
+
+  private static resolvePermissions(role: Role): string[] {
+    let perms = role.permissions.map(p => p.name);
+
+    if (role.parentRole) {
+      perms = perms.concat(User.resolvePermissions(role.parentRole));
+    }
+
+    return Array.from(new Set(perms));
+  }
+
+} 
 

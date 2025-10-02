@@ -1,19 +1,19 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards, Req } from '@nestjs/common';
 // import type Request from 'express';
 import { Request as ExpressRequest } from 'express';
-import { OrganizationsService } from './organization.service';
+import { PermissionService } from './permission.service';
 // import { CreateTaskDto, UpdateTaskDto } from '../dtos/task.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Permissions } from '../auth/permissions.decorator';
 import { PermissionsGuard } from '../auth/permissions.guard';
 
-@Controller('organizations')
+@Controller('permissions')
 //@UseGuards(JwtAuthGuard, PermissionsGuard)
-export class OrganizationsController {
-  constructor(private organizationsService: OrganizationsService) {}
+export class PermissionController {
+  constructor(private permissionService: PermissionService) {}
 
   @Post()
-  @Permissions('organization.create')
+  @Permissions('permission.create')
   async create(/*@Body() dto: CreateTaskDto, */@Req() req: ExpressRequest) {
     const user = req.user;
     return true;
@@ -21,11 +21,10 @@ export class OrganizationsController {
   }
 
   @Get()
-  @Permissions('organization.read')
+  @Permissions('permission.read')
   async findAll(@Req() req: ExpressRequest) {
     const user = req.user;
-    // return true;
-    return this.organizationsService.findAll();
+    return this.permissionService.findAll();
   }
 
 }

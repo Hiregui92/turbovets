@@ -8,8 +8,16 @@ export class UsersService {
   constructor(@InjectRepository(User) private repo: Repository<User>) {}
 
   findByEmail(email: string) {
-    // return this.repo.findOne({ where: { email }, relations: ['role', 'organization'] });
-    return this.repo.findOne({ where: { email } });
+    return this.repo.findOne({
+      where: { email },
+      relations: [
+        'role',
+        'role.permissions',
+        'role.parentRole',
+        'role.parentRole.permissions',
+        'organization'
+      ],
+    });
   }
 
   findById(id: number) {

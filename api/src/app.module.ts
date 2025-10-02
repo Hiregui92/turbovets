@@ -4,6 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import { TasksModule } from './tasks/tasks.module';
 import { OrganizationsModule } from './organizations/organization.module';
 import { RoleModule } from './roles/role.module';
+import { PermissionModule } from './permissions/permission.module';
 import { UsersModule } from './users/users.module';
 import { AuditModule } from './audit/audit.module';
 import { ConfigModule } from '@nestjs/config';
@@ -40,6 +41,7 @@ import { AuditLog } from './entities/audit-log.entity';
     TasksModule,
     OrganizationsModule,
     RoleModule,
+    PermissionModule,
     AuditModule
   ],
 })
