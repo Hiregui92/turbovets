@@ -2,6 +2,23 @@ README - Running the Project with Docker Compose
 ================================================
 # Secure Task Management System – Documentation
 
+## 🔗 Pruebas de Acceso / Test Access
+
+You can access the URL: [http://207.244.240.126:8010/login](http://207.244.240.126:8010/login) with your user accounts to carry out the necessary tests.
+
+Please feel free to explore and let us know if you encounter any issues.
+
+**Usuarios de prueba / Test Users:**
+
+| Usuario / User | Clave / Password | Rol / Role |
+|----------------|----------------|------------|
+| hiregui92@gmail.com | 123456789 | Admin |
+| owner@gmail.com | 123456789 | Owner |
+| viewer@gmail.com | 123456789 | Viewer |
+
+---
+
+
 ## 📦 Setup Instructions
 
 ### 1. Prerequisites
