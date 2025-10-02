@@ -1,4 +1,3 @@
-// src/app/roles/role-list/role-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -19,13 +18,8 @@ export class RoleListComponent implements OnInit {
     this.roleService.getAll().subscribe((data) => {
       this.roles = data;
     });
-    // this.api.getRoles().subscribe(res => this.roles = res);
   }
 
-  deleteRole(id: number) {
-    /*this.api.deleteRole(id).subscribe(() => {
-      this.roles = this.roles.filter(r => r.id !== id);
-    });*/
-  }
+  deleteRole(id: number) {}
 }
 

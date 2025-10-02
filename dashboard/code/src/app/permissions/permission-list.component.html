@@ -12,17 +12,12 @@
       <tr>
         <th class="p-2 text-left">Name</th>
         <th class="p-2 text-left">Description</th>
-        <th class="p-2">Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let perm of permissions" class="border-b">
         <td class="p-2">{{ perm.name }}</td>
         <td class="p-2">{{ perm.description }}</td>
-        <td class="p-2 space-x-2">
-          <button class="px-3 py-1 bg-blue-600 text-white rounded" (click)="edit(perm)">Edit</button>
-          <button class="px-3 py-1 bg-red-600 text-white rounded" (click)="delete(perm)">Delete</button>
-        </td>
       </tr>
     </tbody>
   </table>

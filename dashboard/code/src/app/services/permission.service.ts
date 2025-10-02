@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { APP_SETTINGS, AppSettings } from '../app.config';
+
 
 export interface Permission {
   id?: number;
@@ -10,9 +12,12 @@ export interface Permission {
 
 @Injectable({ providedIn: 'root' })
 export class PermissionService {
-  private apiUrl = 'http://localhost:3000/organizations';
+  private apiUrl = `${this.settings.backendUrl}/permissions`;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(APP_SETTINGS) private settings: AppSettings
+  ) {}
 
   getAll(): Observable<Permission[]> {
     return this.http.get<Permission[]>(this.apiUrl);

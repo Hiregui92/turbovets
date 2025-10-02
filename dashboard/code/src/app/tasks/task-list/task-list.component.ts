@@ -1,45 +1,42 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { TaskService, Task } from '../../services/task.service';
-/*
-interface Task {
-  id: number;
-  title: string;
-  description: string;
-  status: string;
-}
-*/
+import { AuthService } from '../../services/auth.service';
+
+
 @Component({
   selector: 'app-tasks-list',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './task-list.component.html'
 })
-// export class TasksListComponent implements OnInit {
 export class TasksListComponent {
-// viewMode: 'list' | 'kanban' = 'list';
   @Input() tasks: Task[] = [];
-/*
-  constructor(private taskService: TaskService) {}
+  loading = false;
 
-  ngOnInit(): void {
-    this.taskService.getTasks().subscribe((data) => {
-      this.tasks = data;
+  constructor(
+    private router: Router, 
+    public auth: AuthService, 
+    private api: TaskService) {}
+
+  deleteTask(id: number) {
+    this.loading = true;
+    this.api.deleteTask(id).subscribe({
+      next: () => {
+        this.tasks = this.tasks.filter(t => t.id !== id);
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error deleting task', err);
+        this.loading = false;
+      }
     });
   }
 
-  setViewMode(mode: 'list' | 'kanban') {
-    this.viewMode = mode;
-  }*/
-
-  deleteTask(id: number) {
-    this.tasks = this.tasks.filter(task => task.id !== id);
-  }
-
   viewTask(id: number) {
-    // Por ahora solo mostramos en consola
-    // Más adelante puedes navegar a `/tasks/:id/edit`
-    console.log('Viewing task:', id);
+    console.log("desde aqui");
+    this.router.navigate(['/tasks', id, 'edit']);
   }
 
 }

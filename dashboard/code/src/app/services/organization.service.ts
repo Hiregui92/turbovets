@@ -1,30 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-/*
-export interface Organization {
-  id?: number;
-  name: string;
-  description?: string;
-}
-*/
+import { APP_SETTINGS, AppSettings } from '../app.config';
+
 
 export interface Organization {
   id?: number;
   name: string;
   description?: string;
 
-  parent?: Organization | null;     // referencia al padre
-  children?: Organization[];        // lista de hijos
+  parent?: Organization | null;
+  children?: Organization[];
 }
 
 @Injectable({ providedIn: 'root' })
 export class OrganizationService {
-  // private baseUrl = 'http://207.244.240.126:3000';
-  //
-  private apiUrl = 'http://207.244.240.126:3000/organizations';
+  private apiUrl = `${this.settings.backendUrl}/organizations`;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(APP_SETTINGS) private settings: AppSettings
+  ) {}
 
   getAll(): Observable<Organization[]> {
     return this.http.get<Organization[]>(this.apiUrl);

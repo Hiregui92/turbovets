@@ -12,13 +12,6 @@ import { OrganizationService, Organization } from '../services/organization.serv
   templateUrl: './organization-list.component.html'
 })
 export class OrganizationListComponent {
-  /*organizations = [
-    { id: 1, name: 'Org One', description: 'Main organization' },
-    { id: 2, name: 'Org Two', description: 'Secondary branch' },
-  ];
-
-  constructor(private router: Router) {}
-*/
   organizations: Organization[] = [];
 
   // Filters
@@ -34,31 +27,6 @@ export class OrganizationListComponent {
     });
   }
 
-/*
-  get filteredOrganizations() {
-    let data = [...this.organizations];
-
-    // Filter by search
-    if (this.searchTerm) {
-      data = data.filter(org =>
-        org.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    }
-
-    // Filter by category
-    if (this.selectedCategory !== 'all') {
-      data = data.filter(org => org.category === this.selectedCategory);
-    }
-
-    // Sort
-    data.sort((a, b) => {
-      const comp = a.name.localeCompare(b.name);
-      return this.sortDirection === 'asc' ? comp : -comp;
-    });
-
-    return data;
-  }
-*/
   toggleSort() {
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
   }

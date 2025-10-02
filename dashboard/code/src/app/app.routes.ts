@@ -15,14 +15,7 @@ import { PermissionListComponent } from './permissions/permission-list.component
 import { PermissionFormComponent } from './permissions/permission-form.component';
 import { AuditListComponent } from './audits/audit-list.component';
 
-/*
-export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent },
-  { path: 'tasks/list', component: TasksListComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
-];
-*/
+
 export const routes: Routes = [
   {
     path: '',
@@ -36,8 +29,9 @@ export const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
     children: [
-      { path: 'tasks', component: TasksPageComponent, canActivate: [AuthGuard], },
+      { path: 'tasks', component: TasksPageComponent, canActivate: [AuthGuard]},
       { path: 'tasks/new', component: TaskFormComponent, canActivate: [AuthGuard], },
+      { path: 'tasks/:id/edit', component: TaskFormComponent, canActivate: [AuthGuard], },
 
       // Organizations
       { path: 'organizations', component: OrganizationListComponent },
@@ -54,10 +48,6 @@ export const routes: Routes = [
       { path: 'permissions/new', component: PermissionFormComponent },
       { path: 'permissions/:id/edit', component: PermissionFormComponent },
 
-
-      //{ path: 'tasks', component: TasksPageComponent },
-
-      //{ path: 'tasks/kanban', component: TaskKanbanComponent },
       { path: 'audit-log', component: AuditListComponent, canActivate: [AuthGuard], },
     ],
   },

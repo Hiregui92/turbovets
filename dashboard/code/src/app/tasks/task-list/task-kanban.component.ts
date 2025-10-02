@@ -1,41 +1,80 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, DragDropModule } from '@angular/cdk/drag-drop';
 import { TaskService, Task } from '../../services/task.service';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-/*
-interface Task {
-  id: number;
-  title: string;
-  description: string;
-  status: string;
-}
-*/
+import { AuthService } from '../../services/auth.service';
+
 @Component({
   selector: 'app-tasks-kanban',
   standalone: true,
   imports: [CommonModule, DragDropModule],
   templateUrl: './task-kanban.component.html'
 })
-export class TasksKanbanComponent {
+export class TasksKanbanComponent implements OnChanges {
   @Input() tasks: Task[] = [];
 
-  get todo() { return this.tasks.filter(t => t.status === 'To Do'); }
-  get inProgress() { return this.tasks.filter(t => t.status === 'In Progress'); }
-  get done() { return this.tasks.filter(t => t.status === 'Done'); }
+  todoTasks: Task[] = [];
+  inProgressTasks: Task[] = [];
+  doneTasks: Task[] = [];
 
-  drop(event: CdkDragDrop<any[]>, newStatus: string) {
+  loading = false;
+
+  constructor(
+    private api: TaskService,
+    public auth: AuthService
+  ) {}
+
+  private updateColumns() {
+    // const validTasks = (this.tasks || []).filter(t => t && t.status && t.title);
+    this.todoTasks.length = 0;
+    this.todoTasks.push(...this.tasks.filter(t => t.status === 'todo'));
+
+    this.inProgressTasks.length = 0;
+    this.inProgressTasks.push(...this.tasks.filter(t => t.status === 'in-progress'));
+
+    this.doneTasks.length = 0;
+    this.doneTasks.push(...this.tasks.filter(t => t.status === 'done'));
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['tasks']) {
+      this.tasks = (this.tasks || []).filter(t => t && t.status && t.title);
+      this.updateColumns();
+    }
+  }
+
+  trackByTaskId(index: number, task: Task) {
+    return task.id;
+  }
+
+  drop(event: CdkDragDrop<Task[]>, newStatus: 'todo' | 'in-progress' | 'done') {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       const task = event.previousContainer.data[event.previousIndex];
-      task.status = newStatus; // actualizar estado al mover
+      const oldStatus = task.status;
+      task.status = newStatus;
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex
       );
+
+      const taskPayload: Partial<Task> = {
+        status: newStatus
+      };
+      this.api.updateTask(task.id, { status: newStatus }).subscribe({
+        next: () => {
+          console.log(`Task ${task.id} updated successfully`);
+        },
+        error: () => {
+          // Revertir cambio en caso de error
+          task.status = oldStatus;
+          setTimeout(() => this.updateColumns(), 0);
+          alert('Failed to update task');
+        }
+      });
     }
   }
 }

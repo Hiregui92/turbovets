@@ -1,11 +1,12 @@
 <div class="flex gap-6 overflow-x-auto pb-4">
   <!-- Columna Todo -->
   <div class="flex-1 min-w-[250px] bg-gray-100 rounded-xl p-4 shadow-md"
-       cdkDropList [cdkDropListData]="todo" 
-       (cdkDropListDropped)="drop($event, 'Todo')">
+       cdkDropList [cdkDropListData]="todoTasks" 
+       (cdkDropListDropped)="drop($event, 'todo')">
     <h3 class="text-lg font-semibold mb-4 text-gray-800">Todo</h3>
-    <div *ngFor="let task of todo" cdkDrag 
-         class="mb-3 p-3 bg-white rounded-xl shadow-sm border 
+    <div *ngFor="let task of todoTasks; trackBy: trackByTaskId" cdkDrag
+         class="mb-3 p-3 rounded-xl shadow-sm border 
+                bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300
                 hover:shadow-md cursor-grab active:cursor-grabbing transition">
       {{ task.title }}
     </div>
@@ -13,11 +14,12 @@
 
   <!-- Columna In Progress -->
   <div class="flex-1 min-w-[250px] bg-gray-100 rounded-xl p-4 shadow-md"
-       cdkDropList [cdkDropListData]="inProgress" 
-       (cdkDropListDropped)="drop($event, 'In Progress')">
+       cdkDropList [cdkDropListData]="inProgressTasks" 
+       (cdkDropListDropped)="drop($event, 'in-progress')">
     <h3 class="text-lg font-semibold mb-4 text-gray-800">In Progress</h3>
-    <div *ngFor="let task of inProgress" cdkDrag 
-         class="mb-3 p-3 bg-white rounded-xl shadow-sm border 
+    <div *ngFor="let task of inProgressTasks; trackBy: trackByTaskId" cdkDrag
+         class="mb-3 p-3 rounded-xl shadow-sm border 
+                bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300
                 hover:shadow-md cursor-grab active:cursor-grabbing transition">
       {{ task.title }}
     </div>
@@ -25,14 +27,14 @@
 
   <!-- Columna Done -->
   <div class="flex-1 min-w-[250px] bg-gray-100 rounded-xl p-4 shadow-md"
-       cdkDropList [cdkDropListData]="done" 
-       (cdkDropListDropped)="drop($event, 'Done')">
+       cdkDropList [cdkDropListData]="doneTasks" 
+       (cdkDropListDropped)="drop($event, 'done')">
     <h3 class="text-lg font-semibold mb-4 text-gray-800">Done</h3>
-    <div *ngFor="let task of done" cdkDrag 
-         class="mb-3 p-3 bg-white rounded-xl shadow-sm border 
+    <div *ngFor="let task of doneTasks; trackBy: trackByTaskId" cdkDrag
+         class="mb-3 p-3 rounded-xl shadow-sm border 
+                bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300
                 hover:shadow-md cursor-grab active:cursor-grabbing transition">
       {{ task.title }}
     </div>
   </div>
 </div>
-

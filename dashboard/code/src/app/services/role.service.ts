@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { APP_SETTINGS, AppSettings } from '../app.config';
 
 export interface Role {
   id?: number;
@@ -10,9 +11,12 @@ export interface Role {
 
 @Injectable({ providedIn: 'root' })
 export class RoleService {
-  private apiUrl = 'http://207.244.240.126:3000/roles';
+  private apiUrl = `${this.settings.backendUrl}/roles`;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(APP_SETTINGS) private settings: AppSettings
+  ) {}
 
   getAll(): Observable<Role[]> {
     return this.http.get<Role[]>(this.apiUrl);

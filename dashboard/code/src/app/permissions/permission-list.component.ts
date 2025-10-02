@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { PermissionService, Permission } from '../services/permission.service';
+
 
 @Component({
   standalone: true,
@@ -9,12 +11,17 @@ import { Router, RouterModule } from '@angular/router';
   templateUrl: './permission-list.component.html'
 })
 export class PermissionListComponent {
-  permissions = [
-    { id: 1, name: 'Org One', description: 'Main organization' },
-    { id: 2, name: 'Org Two', description: 'Secondary branch' },
-  ];
+  permissions: Permission[] = [];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router, 
+    private permissionService: PermissionService) {}
+
+  ngOnInit(): void {
+    this.permissionService.getAll().subscribe((data) => {
+      this.permissions = data;
+    });
+  }
 
   edit(perm: any) {
     this.router.navigate(['/permissions', perm.id, 'edit']);
@@ -24,4 +31,5 @@ export class PermissionListComponent {
     this.permissions = this.permissions.filter(p => p.id !== perm.id);
   }
 }
+
 

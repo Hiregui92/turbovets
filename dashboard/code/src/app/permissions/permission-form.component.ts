@@ -1,5 +1,3 @@
-
-// src/app/permissions/permission-form/permission-form.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
@@ -28,26 +26,11 @@ export class PermissionFormComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {
-    /*this.permissionId = Number(this.route.snapshot.paramMap.get('id'));
-    if (this.permissionId) {
-      this.isEdit = true;
-      this.api.getPermissions().subscribe(perms => {
-        const perm = perms.find(p => p.id === this.permissionId);
-        if (perm) this.permissionForm.patchValue(perm);
-      });
-    }*/
-  }
+  ngOnInit() {}
 
   onSubmit() {
     if (this.permissionForm.invalid) return;
     const data = this.permissionForm.value;
-
-    /*if (this.isEdit) {
-      this.api.updatePermission(this.permissionId, data).subscribe(() => this.router.navigate(['/permissions']));
-    } else {
-      this.api.createPermission(data).subscribe(() => this.router.navigate(['/permissions']));
-    }*/
   }
 }
 

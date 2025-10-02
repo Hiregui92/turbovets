@@ -4,6 +4,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
+interface MenuItem {
+  label: string;
+  route: string;
+  permission: string | null;
+}
+
 @Component({
   selector: 'app-main-layout',
   standalone: true,
@@ -17,12 +23,14 @@ import { AuthService } from '../services/auth.service';
 
         <!-- Navigation -->
         <nav class="space-x-4">
-          <a routerLink="/tasks" class="hover:underline">Tasks</a>
-          <a routerLink="/audit-log" class="hover:underline">Audits</a>
-          <a routerLink="/organizations" class="hover:underline">Organizations</a>
-          <a routerLink="/roles" class="hover:underline">Roles</a>
-          <a routerLink="/permissions" class="hover:underline">Permissions</a>
-	        <button (click)="onLogout()">Logout</button>
+          <ng-container *ngFor="let item of visibleMenu">
+            <a *ngIf="authService.hasPermission(item.permission!)" 
+               [routerLink]="item.route" 
+               class="hover:underline">
+              {{ item.label }}
+            </a>
+          </ng-container>
+          <button (click)="onLogout()">Logout</button>
         </nav>
 
         <!-- Dark/Light Toggle -->
@@ -42,7 +50,20 @@ import { AuthService } from '../services/auth.service';
 })
 export class MainLayoutComponent {
   isDark = false;
-  constructor(private authService: AuthService, private router: Router) {}
+
+  menuItems: MenuItem[] = [
+    { label: 'Tasks', route: '/tasks', permission: 'task.read' },
+    { label: 'Audits', route: '/audit-log', permission: 'audit.read' },
+    { label: 'Organizations', route: '/organizations', permission: 'organization.read' },
+    { label: 'Roles', route: '/roles', permission: 'role.read' },
+    { label: 'Permissions', route: '/permissions', permission: 'permission.read' },
+  ];
+
+  get visibleMenu() {
+    return this.menuItems.filter(item => !item.permission || this.authService.hasPermission(item.permission));
+  }
+
+  constructor(public authService: AuthService, private router: Router) {}
 
   toggleDarkMode() {
     this.isDark = !this.isDark;
@@ -52,9 +73,9 @@ export class MainLayoutComponent {
       document.documentElement.classList.remove('dark');
     }
   }
+
   onLogout() {
     this.authService.clearToken();
-    this.router.navigate(['/login']); // redirect to login page
+    this.router.navigate(['/login']);
   }
 }
-
