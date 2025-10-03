@@ -13,7 +13,7 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 @ApiTags('users')
 @Controller('tasks')
 //@UseGuards(JwtAuthGuard, PermissionsGuard)
-@UseGuards(AttachUserIdGuard, PermissionsGuard)
+@UseGuards(JwtAuthGuard, AttachUserIdGuard, PermissionsGuard)
 export class TasksController {
   constructor(private tasksService: TasksService) {}
 
