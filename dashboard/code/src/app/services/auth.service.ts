@@ -1,5 +1,7 @@
 // auth.service.ts
 import { Injectable } from '@angular/core';
+import jwt_decode from 'jwt-decode';
+
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -50,9 +52,26 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     const token = this.getToken();
-    console.log(token);
-    // Aquí puedes decodificar y validar expiración si quieres
-    return !!token;
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const decoded: any = jwt_decode(token);
+      console.log(decoded);
+
+      if (!decoded.exp) {
+        return false; // token inválido
+      }
+
+      // exp viene en segundos, no en milisegundos
+      const isExpired = Date.now() >= decoded.exp * 1000;
+      console.log(isExpired);
+      return !isExpired;
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return false;
+    }
   }
 
   hasPermission(permission: string): boolean {

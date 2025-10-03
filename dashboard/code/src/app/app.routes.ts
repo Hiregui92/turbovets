@@ -6,6 +6,8 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { TasksPageComponent } from './tasks/task-list/task-page.component';
 import { TaskFormComponent } from './tasks/task-form/task-form.component';
 import { AuthGuard } from './auth.guard';
+import { RedirectGuard } from './redirect.guard';
+import { RedirectComponent } from './redirect.component';
 
 import { OrganizationListComponent } from './organizations/organization-list.component';
 import { OrganizationFormComponent } from './organizations/organization-form.component';
@@ -17,6 +19,11 @@ import { AuditListComponent } from './audits/audit-list.component';
 
 
 export const routes: Routes = [
+  {
+    path: '',
+    component: RedirectComponent,
+    canActivate: [RedirectGuard],
+  },
   {
     path: '',
     component: AuthLayoutComponent,
@@ -34,19 +41,19 @@ export const routes: Routes = [
       { path: 'tasks/:id/edit', component: TaskFormComponent, canActivate: [AuthGuard], },
 
       // Organizations
-      { path: 'organizations', component: OrganizationListComponent },
-      { path: 'organizations/new', component: OrganizationFormComponent },
-      { path: 'organizations/:id/edit', component: OrganizationFormComponent },
+      { path: 'organizations', component: OrganizationListComponent, canActivate: [AuthGuard]},
+      { path: 'organizations/new', component: OrganizationFormComponent, canActivate: [AuthGuard]},
+      { path: 'organizations/:id/edit', component: OrganizationFormComponent, canActivate: [AuthGuard]},
 
       // Roles
-      { path: 'roles', component: RoleListComponent },
-      { path: 'roles/new', component: RoleFormComponent },
-      { path: 'roles/:id/edit', component: RoleFormComponent },
+      { path: 'roles', component: RoleListComponent, canActivate: [AuthGuard]},
+      { path: 'roles/new', component: RoleFormComponent, canActivate: [AuthGuard]},
+      { path: 'roles/:id/edit', component: RoleFormComponent, canActivate: [AuthGuard]},
 
       // Permissions
-      { path: 'permissions', component: PermissionListComponent },
-      { path: 'permissions/new', component: PermissionFormComponent },
-      { path: 'permissions/:id/edit', component: PermissionFormComponent },
+      { path: 'permissions', component: PermissionListComponent, canActivate: [AuthGuard]},
+      { path: 'permissions/new', component: PermissionFormComponent, canActivate: [AuthGuard]},
+      { path: 'permissions/:id/edit', component: PermissionFormComponent, canActivate: [AuthGuard]},
 
       { path: 'audit-log', component: AuditListComponent, canActivate: [AuthGuard], },
     ],
